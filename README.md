@@ -67,7 +67,7 @@ class PostRepository extends Repository {
     }
 }
 
-const post_repo = new Repository(mongoose.model('Post'));
+const post_repo = new PostRepository(mongoose.model('Post'));
 ```
 
 ## Functions ##
