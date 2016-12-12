@@ -78,12 +78,14 @@ Creates a new instance of the Repository
 - Options:
   - applyStatics - default: true  
     Applies all static model functions to the Repo
+    
 #### Returns ####
 New instance of the Repository
 
 ### create ###
 #### Params ####
 - obj - Object to save to the database
+
 #### Returns ####
 Given object saved to the database
 
@@ -106,13 +108,14 @@ Executes the given query
             populate: { path: 'friends' }
          }
          ```
-         Array: `[One of the 2 above]`
+     Array: `[One of the 2 above]`
   - limit
   - skip
   - sort
   - lean - default: false
   - count - default: false
-  - multiple - default: true
+  - multiple - default: true  
+
 #### Returns ####
 Query result
 If `multiple` is `true`: it'll return an `Array`, else it'll return an `Object`
@@ -124,7 +127,8 @@ Looks for 1 document based on the objectId
 - Options:
   - select
   - populate
-  - lean - default: false
+  - lean - default: false  
+
 #### Returns ####
 The request document
 
@@ -140,6 +144,7 @@ Retrieves a document by it's ID, assigns the new values to it (thanks you lodash
 #### Params ####
 - objectId - Object || String
 - newValues - Object
+
 #### Returns ####
 The updated document
 
@@ -147,6 +152,7 @@ The updated document
 Removes the document identified by the given ObjectID from the collection
 #### Params ####
 - objectId - Object || String
+
 #### Returns ####
 The remove's result
 
