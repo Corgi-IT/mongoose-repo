@@ -39,48 +39,19 @@ class Repository {
     }
 
     /**
-     * Searches for one Document based on the ObjectID
-     * Second parameter is an Options object
-     *
-     * @param {String} objectId An uploads ObjectId
-     * @param {String} select Fields to include
-     * @param {String} populate Fields to populate
-     * @param {Number} limit Max amount of docs
-     * @param {Object} sort Fields to sort by
-     * @param {Boolean} lean True if the result should be lean, false if not
-     * @returns {Object} document || error The Object with the correct upload or error property with what went wrong
-     */
-    *findByObjectId(objectId, {select, populate, limit, sort, lean = false} = {}) {
-        try {
-            if (!objectId) {
-                return {error: 'No ObjectId given'};
-            }
-
-            const body = yield this.find({_id: objectId}, {select, multiple: false, populate, limit, sort, lean});
-
-            if (body === null) {
-                return {error: 'No object found'};
-            }
-            return body;
-        } catch (error) {
-            return {error: error.message};
-        }
-    }
-
-    /**
      * Searches for (a) Document(s) based on the given Query
      *
      * @param {Object} query Query to execute in MongoDB
      * @param {String} select Fields to include
      * @param {String} populate Fields to populate
      * @param {Number} limit Max amount of docs
+     * @param {Number} skip The amount of documents the query should skip
      * @param {Object} sort Fields to sort by
      * @param {Boolean} lean True if the result should be lean, false if not
      * @param {Boolean} [multiple=true] Return multiple documents or just one, defaults to true
-     * @param {Number} skip The amount of documents the query should skip
      * @returns {Object} Search result
      */
-    *find(query = {}, {select, populate, limit, sort, lean = false, count = false, multiple = true, skip} = {}) {
+    *find(query = {}, {select, populate, limit, skip, sort, lean = false, count = false, multiple = true} = {}) {
         try {
             const result = multiple ? this.Model.find(query) : this.Model.findOne(query);
 
@@ -113,11 +84,38 @@ class Repository {
         }
     }
 
+    /**
+     * Searches for one Document based on the ObjectID
+     * Second parameter is an Options object
+     *
+     * @param {String} objectId An uploads ObjectId
+     * @param {String} select Fields to include
+     * @param {String} populate Fields to populate
+     * @param {Boolean} lean True if the result should be lean, false if not
+     * @returns {Object} document || error The Object with the correct upload or error property with what went wrong
+     */
+    *findByObjectId(objectId, {select, populate, lean = false} = {}) {
+        try {
+            if (!objectId) {
+                return {error: 'No ObjectId given'};
+            }
+
+            const body = yield this.find({_id: objectId}, {select, multiple: false, populate, lean});
+
+            if (body === null) {
+                return {error: 'No object found'};
+            }
+            return body;
+        } catch (error) {
+            return {error};
+        }
+    }
+
     *findAll() {
         try {
             return yield this.find({});
         } catch (error) {
-            return {error: error.message};
+            return {error};
         }
     }
 
