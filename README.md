@@ -73,6 +73,7 @@ const post_repo = new PostRepository(mongoose.model('Post'));
 ## Functions ##
 ### Constructor ###
 Creates a new instance of the Repository
+
 #### Params ####
 - model - Mongoose Model
 - Options:
@@ -91,6 +92,7 @@ Given object saved to the database
 
 ### find ###
 Executes the given query
+
 #### Params ####
 - query - Object
 - Options:
@@ -122,6 +124,7 @@ If `multiple` is `true`: it'll return an `Array`, else it'll return an `Object`
 
 ### findByObjectId ###
 Looks for 1 document based on the objectId
+
 #### Params ####
 - query - Object
 - Options:
@@ -134,6 +137,7 @@ The request document
 
 ### findAll ###
 Retrieves all documents in that collection
+
 #### Params ####
 none
 #### Returns ####
@@ -141,6 +145,7 @@ Array with all documents in that collection
 
 ### update ###
 Retrieves a document by it's ID, assigns the new values to it (thanks you lodash) and saves it
+
 #### Params ####
 - objectId - Object || String
 - newValues - Object
@@ -150,6 +155,7 @@ The updated document
 
 ### remove ###
 Removes the document identified by the given ObjectID from the collection
+
 #### Params ####
 - objectId - Object || String
 
