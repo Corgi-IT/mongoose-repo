@@ -10,6 +10,7 @@ class Repository {
      * @returns {Object} Instance of Repository
      */
     constructor(model, {applyStatics = true} = {}) {
+        this.class = Repository.name;
         this.Model = model || null;
 
         if (applyStatics) {
