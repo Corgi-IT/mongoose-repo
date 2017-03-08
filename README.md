@@ -1,6 +1,11 @@
 # Mongoose-Repo (morepo)
 A Mongoose Repository Class
 
+[![Build Status](https://travis-ci.org/Geexteam/mongoose-repo.svg?branch=master)](https://travis-ci.org/Geexteam/mongoose-repo)
+[![Dependency Status](https://gemnasium.com/badges/github.com/Geexteam/mongoose-repo.svg)](https://gemnasium.com/github.com/Geexteam/mongoose-repo)
+[![NSP Status](https://nodesecurity.io/orgs/geex-team/projects/124c6964-bd3c-4b82-ae9b-633df613c8bb/badge)](https://nodesecurity.io/orgs/geex-team/projects/124c6964-bd3c-4b82-ae9b-633df613c8bb)
+
+
 ## Requirements ##
 Make sure you're using Nodejs 6.x or higher, for the `class` identifier to work
 
@@ -140,6 +145,7 @@ Retrieves all documents in that collection
 
 #### Params ####
 none
+
 #### Returns ####
 Array with all documents in that collection
 
