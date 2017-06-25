@@ -10,7 +10,6 @@ describe('Mongoose Repo test', function () {
         repo = new Repository(null, {applyStatics: false});
     });
 
-
     describe('Basic', () => {
         it('Should make a new instance of the Repository', () => {
             const result = new Repository(null, {applyStatics: false});
@@ -18,7 +17,6 @@ describe('Mongoose Repo test', function () {
             result.should.have.property('class', 'Repository');
         })
     });
-
 
     describe('Constructor', () => {
         it('Should set the Model');
@@ -54,5 +52,4 @@ describe('Mongoose Repo test', function () {
     describe('remove', () => {
         it('Should remove the document');
     });
-
 });

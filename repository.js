@@ -101,12 +101,7 @@ class Repository {
                 return {error: 'No ObjectId given'};
             }
 
-            const body = yield this.find({_id: objectId}, {select, multiple: false, populate, lean});
-
-            if (body === null) {
-                return {error: 'No object found'};
-            }
-            return body;
+            return yield this.find({_id: objectId}, {select, multiple: false, populate, lean});
         } catch (error) {
             return {error};
         }
