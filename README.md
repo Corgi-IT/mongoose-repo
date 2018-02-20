@@ -7,7 +7,7 @@ A Mongoose Repository Class
 
 
 ## Requirements ##
-Make sure you're using Nodejs 6.x or higher, for the `class` identifier to work
+Make sure you're using Nodejs 8.x or higher, for `async/await` to work
 
 
 ## Installation ##
@@ -20,7 +20,7 @@ You can install this module with NPM:
 You can use this class like it is or make a specific Repository class that extends this class
 
 ### Usecase 1: ###
-```ES6
+```ES8
 const mongoose = require('mongoose');
 const Repository = require('morepo');
 
@@ -28,7 +28,7 @@ const post_repo = new Repository(mongoose.model('Post'));
 ```
 
 ### Usecase 2: ###
-```ES6
+```ES8
 const mongoose = require('mongoose');
 const Repository = require('morepo');
 
@@ -37,15 +37,15 @@ class PostRepository extends Repository {
     constructor(model) {
         super(model || mongoose.model('Post'));
     }
-    
+
     // Override an existing function to add some custom functionality
-    *findByObjectId(objectId) {
+    async findByObjectId(objectId) {
         try {
             if (!objectId) {
                 return {error: 'No ObjectId given'};
             }
-    
-            const body = yield this.find(
+
+            const body = await this.find(
                 {_id: objectId},
                 this.generateOptions({multiple: false})
             );
@@ -54,11 +54,11 @@ class PostRepository extends Repository {
             }
             return body;
         } catch (error) {
-    
+
             return {error: error.message};
         }
     }
-    
+
     generateOptions(options) {
         const base = {
             populate: [
@@ -72,7 +72,7 @@ class PostRepository extends Repository {
     }
 }
 
-const post_repo = new PostRepository(mongoose.model('Post'));
+const postRepo = new PostRepository(mongoose.model('Post'));
 ```
 
 ## Functions ##
@@ -82,9 +82,9 @@ Creates a new instance of the Repository
 #### Params ####
 - model - Mongoose Model
 - Options:
-  - applyStatics - default: true  
+  - applyStatics - default: true
     Applies all static model functions to the Repo
-    
+
 #### Returns ####
 New instance of the Repository
 
@@ -104,10 +104,10 @@ Executes the given query
   - select
   - populate
     - If something else than an Array, String or Object is given, the value is skipped
-    - Examples  
-     Populate examples:  
-     String: `created_by`  
-     Object (with multilevel populate):  
+    - Examples
+     Populate examples:
+     String: `created_by`
+     Object (with multilevel populate):
          ```JS
          {
             path: 'friends',
@@ -121,7 +121,7 @@ Executes the given query
   - sort
   - lean - default: false
   - count - default: false
-  - multiple - default: true  
+  - multiple - default: true
 
 #### Returns ####
 Query result
@@ -135,7 +135,7 @@ Looks for 1 document based on the objectId
 - Options:
   - select
   - populate
-  - lean - default: false  
+  - lean - default: false
 
 #### Returns ####
 The request document
