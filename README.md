@@ -9,6 +9,7 @@ A Mongoose Repository Class
 ## Requirements ##
 Make sure you're using Nodejs 8.x or higher, for `async/await` to work
 
+If you're working on Nodejs 6.x, please install morepo version 0.8
 
 ## Installation ##
 
@@ -24,7 +25,7 @@ You can use this class like it is or make a specific Repository class that exten
 const mongoose = require('mongoose');
 const Repository = require('morepo');
 
-const post_repo = new Repository(mongoose.model('Post'));
+const postRepo = new Repository(mongoose.model('Post'));
 ```
 
 ### Usecase 2: ###
