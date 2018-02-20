@@ -1,5 +1,3 @@
-const {assign} = require('lodash');
-
 class Repository {
 
     /**
@@ -27,18 +25,17 @@ class Repository {
      * @param {Object} [input={}] The object that should be saved
      * @returns {Object} Created document
      */
-    *create(input = {}) {
+    async create(input = {}) {
         try {
             const doc = new this.Model(input);
 
-            yield doc.save();
+            await doc.save();
 
             return doc;
-        } catch (error) {
+        } catch(error) {
             return {error: error.message};
         }
     }
-
     /**
      * Searches for (a) Document(s) based on the given Query
      *
@@ -52,7 +49,7 @@ class Repository {
      * @param {Boolean} [multiple=true] Return multiple documents or just one, defaults to true
      * @returns {Object} Search result
      */
-    *find(query = {}, {select, populate, limit, skip, sort, lean = false, count = false, multiple = true} = {}) {
+    async find(query = {}, {select, populate, limit, skip, sort, lean = false, count = false, multiple = true} = {}) {
         try {
             const result = multiple ? this.Model.find(query) : this.Model.findOne(query);
 
@@ -74,11 +71,11 @@ class Repository {
             }
 
             if (count) {
-                return yield result.count();
+                return await result.count();
             } else if (lean) {
-                return yield result.lean();
+                return await result.lean();
             } else {
-                return yield result;
+                return await result;
             }
         } catch (error) {
             return {error: error.message};
@@ -95,21 +92,21 @@ class Repository {
      * @param {Boolean} lean True if the result should be lean, false if not
      * @returns {Object} document || error The Object with the correct upload or error property with what went wrong
      */
-    *findByObjectId(objectId, {select, populate, lean = false} = {}) {
+    async findByObjectId(objectId, {select, populate, lean = false} = {}) {
         try {
             if (!objectId) {
                 return {error: 'No ObjectId given'};
             }
 
-            return yield this.find({_id: objectId}, {select, multiple: false, populate, lean});
+            return await this.find({_id: objectId}, {select, multiple: false, populate, lean});
         } catch (error) {
             return {error};
         }
     }
 
-    *findAll() {
+    async findAll() {
         try {
-            return yield this.find({});
+            return await this.find({});
         } catch (error) {
             return {error};
         }
@@ -123,13 +120,13 @@ class Repository {
      * @param {Object} newValues The new/updated values for the Document
      * @returns {Object} doc || error
      */
-    *update(objectId, newValues) {
+    async update(objectId, newValues) {
         try {
-            const result = yield this.findByObjectId(objectId);
+            const result = await this.findByObjectId(objectId);
 
-            assign(result, newValues);
+            Object.assign(result, newValues);
 
-            yield result.save();
+            await result.save();
 
             return result;
         } catch (error) {
@@ -143,9 +140,9 @@ class Repository {
      * @param {String} objectId The ID of the Document you'd like to delete
      * @returns {Object} result || error
      */
-    *remove(objectId) {
+    async remove(objectId) {
         try {
-            return yield this.Model.remove({_id: objectId});
+            return await this.Model.remove({_id: objectId});
         } catch (error) {
             return {error: error.message};
         }
@@ -159,7 +156,7 @@ class Repository {
      * @returns {Object} The new search options
      */
     generateOptions(base, options) {
-        return assign(base, options);
+        return Object.assign(base, options);
     }
 }
 

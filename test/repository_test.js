@@ -1,6 +1,4 @@
-"use strict";
 require('should');
-const {wrap} = require('co');
 const Repository = require('../repository');
 
 describe('Mongoose Repo test', function () {
@@ -34,11 +32,11 @@ describe('Mongoose Repo test', function () {
     });
 
     describe('.findByObjectId', () => {
-        it('Should return an error if no ObjectId is given', wrap(function *(){
-            const result = yield repo.findByObjectId();
+        it('Should return an error if no ObjectId is given', async () => {
+            const result = await repo.findByObjectId();
 
             result.should.have.property('error', 'No ObjectId given');
-        }));
+        });
     });
 
     describe('.findAll', () => {
